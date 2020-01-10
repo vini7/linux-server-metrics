@@ -3,9 +3,9 @@
 ###################################################################
 #Script Name	: check_cpu_usage.sh
 #Description	: Skripti kontrollon perdorimin e CPU
-#Args 			: NONE
-#Author       	: Edvin Reci
-#Email         	: edvin.reci@ids.al
+#Args         : NONE
+#Author       : Edvin Reci
+#Email        : edvin.reci@ids.al
 ###################################################################
 
 #First measurement
