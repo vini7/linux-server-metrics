@@ -1,0 +1,46 @@
+#!/bin/bash
+
+###################################################################
+#Script Name	: check_cpu_usage.sh
+#Description	: Skripti kontrollon perdorimin e CPU
+#Args 			: NONE
+#Author       	: Edvin Reci
+#Email         	: edvin.reci@ids.al
+###################################################################
+
+#First measurement
+CPU_1=($(sed -n 's/^cpu\s//p' /proc/stat))
+IDLE_1=${CPU_1[3]}
+
+#Calculation of the first total CPU time
+TOTAL_1=0
+for VALUE_1 in "${CPU_1[@]:0:8}"; do
+TOTAL_1=$((TOTAL_1+VALUE_1))
+done
+
+PERCENTAGE_1=$((IDLE_1*100/TOTAL_1))
+
+#Time to wait
+sleep 1
+
+#Second measurement
+CPU_2=($(sed -n 's/^cpu\s//p' /proc/stat))
+IDLE_2=${CPU_2[3]}
+
+TOTAL_2=0
+for VALUE_2 in "${CPU_2[@]:0:8}"; do
+TOTAL_2=$((TOTAL_2+VALUE_2))
+done
+
+PERCENTAGE_2=$((IDLE_2*100/TOTAL_2))
+
+#Delta
+DeltaIDLE=$(($IDLE_2-$IDLE_1))
+DeltaTOTAL=$(($TOTAL_2-$TOTAL_1))
+DeltaPERCENTAGE=$((DeltaIDLE*100/DeltaTOTAL))
+CPU_usage=$((100-DeltaPERCENTAGE))
+
+echo 'Dealta IDLE - '$DeltaIDLE''
+echo 'Dealta TOTAL - '$DeltaTOTAL''
+echo 'Dealta PERCENTAGE - '$DeltaPERCENTAGE''
+echo 'Dealta Usage - '$CPU_usage''
